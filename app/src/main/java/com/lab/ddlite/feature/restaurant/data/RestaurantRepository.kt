@@ -27,14 +27,10 @@ class RestaurantRepositoryImpl(
         return flow {
             val result = when (val result = remoteRepo.getRestaurant(id)) {
                 is Success -> {
-                    Success<Restaurant, Throwable>(
-                        result.value.toRestaurant()
-                    )
+                    Success(result.value.toRestaurant())
                 }
                 is Failure -> {
-                    Failure<Restaurant, Throwable>(
-                        result.reason
-                    )
+                    Failure(result.reason)
                 }
             }
             emit(result)
@@ -45,13 +41,10 @@ class RestaurantRepositoryImpl(
         return flow {
             val result = when (val result = remoteRepo.listRestaurants(params)) {
                 is Success -> {
-                    Success<List<Restaurant>, Throwable>(
-                        result.value.map { it.toRestaurant() })
+                    Success(result.value.map { it.toRestaurant() })
                 }
                 is Failure -> {
-                    Failure<List<Restaurant>, Throwable>(
-                        result.reason
-                    )
+                    Failure(result.reason)
                 }
             }
             emit(result)

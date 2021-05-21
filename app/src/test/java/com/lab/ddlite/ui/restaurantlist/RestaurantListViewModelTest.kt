@@ -122,14 +122,14 @@ class RestaurantListViewModelTest : BaseTestCase() {
             return flow {
                 when (scenario) {
                     Scenario.GeneralError -> {
-                        emit(Failure<List<Restaurant>, Throwable>(RuntimeException("")))
+                        emit(Failure(RuntimeException("")))
                     }
                     Scenario.MultiSuccess -> {
-                        emit(Success<List<Restaurant>, Throwable>(restaurants.subList(0, 1)))
+                        emit(Success(restaurants.subList(0, 1)))
                         delay(300) // simulate network delay
-                        emit(Success<List<Restaurant>, Throwable>(restaurants.subList(1, 3)))
+                        emit(Success(restaurants.subList(1, 3)))
                     }
-                    else -> emit(Success<List<Restaurant>, Throwable>(restaurants))
+                    else -> emit(Success(restaurants))
                 }
             }
         }

@@ -1,6 +1,6 @@
 package com.lab.ddlite.common
 
-sealed class Outcome<T, E>
+sealed class Outcome<out T, out E>
 
-data class Success<T, E>(val value: T) : Outcome<T, E>()
-data class Failure<T, E>(val reason: E) : Outcome<T, E>()
+data class Success<out T>(val value: T) : Outcome<T, Nothing>()
+data class Failure<out E>(val reason: E) : Outcome<Nothing, E>()

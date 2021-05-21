@@ -19,21 +19,15 @@ class RestaurantRemoteDataRepository(private val remoteApi: RemoteApi) {
             try {
                 val response = remoteApi.getRestaurant(id).execute()
                 if (response.isSuccessful && response.body() != null) {
-                    return@withContext Success<RestaurantResponse, Throwable>(
-                        response.body()!!
-                    )
+                    return@withContext Success(response.body()!!)
                 } else {
-                    return@withContext Failure<RestaurantResponse, Throwable>(
-                        Exception(
-                            response.message()
-                        )
+                    return@withContext Failure(
+                        Exception(response.message())
                     )
                 }
             } catch (t: Throwable) {
                 if (t !is CancellationException) {
-                    return@withContext Failure<RestaurantResponse, Throwable>(
-                        t
-                    )
+                    return@withContext Failure(t)
                 } else {
                     throw t
                 }
@@ -52,21 +46,15 @@ class RestaurantRemoteDataRepository(private val remoteApi: RemoteApi) {
                 ).execute()
 
                 if (response.isSuccessful && response.body() != null) {
-                    return@withContext Success<List<Store>, Throwable>(
-                        response.body()!!.stores
-                    )
+                    return@withContext Success(response.body()!!.stores)
                 } else {
-                    return@withContext Failure<List<Store>, Throwable>(
-                        Exception(
-                            response.message()
-                        )
+                    return@withContext Failure(
+                        Exception(response.message())
                     )
                 }
             } catch (t: Throwable) {
                 if (t !is CancellationException) {
-                    return@withContext Failure<List<Store>, Throwable>(
-                        t
-                    )
+                    return@withContext Failure(t)
                 } else {
                     throw t
                 }
