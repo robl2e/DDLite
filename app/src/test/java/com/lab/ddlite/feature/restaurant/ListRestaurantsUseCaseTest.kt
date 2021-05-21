@@ -36,7 +36,7 @@ class ListRestaurantsUseCaseTest : BaseTestCase() {
     fun `list restaurants successfully`() {
         runBlocking {
             listRestaurantsUseCase().collect {
-                val expected = Success<List<Restaurant>, Throwable>(restaurants)
+                val expected = Success(restaurants)
                 val result = it as Success
                 Assert.assertEquals(expected, it)
                 Assert.assertEquals(expected.value, result.value)
@@ -117,20 +117,20 @@ class ListRestaurantsUseCaseTest : BaseTestCase() {
             return flow {
                 when (scenario) {
                     is Scenario.MixedSuccessFailure -> {
-                        emit(Success<List<Restaurant>, Throwable>(restaurants.subList(0, 1)))
+                        emit(Success(restaurants.subList(0, 1)))
                         delay(300) // simulate network delay
-                        emit(Failure<List<Restaurant>, Throwable>(IOException("")))
+                        emit(Failure(IOException("")))
                     }
                     is Scenario.MultiSuccess -> {
-                        emit(Success<List<Restaurant>, Throwable>(restaurants.subList(0, 1)))
+                        emit(Success(restaurants.subList(0, 1)))
                         delay(300) // simulate network delay
-                        emit(Success<List<Restaurant>, Throwable>(restaurants.subList(1, 2)))
+                        emit(Success(restaurants.subList(1, 2)))
                     }
                     is Scenario.GeneralError -> {
-                        emit(Failure<List<Restaurant>, Throwable>(RuntimeException("")))
+                        emit(Failure(RuntimeException("")))
                     }
                     else ->
-                        emit(Success<List<Restaurant>, Throwable>(restaurants))
+                        emit(Success(restaurants))
                 }
             }
         }
