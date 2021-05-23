@@ -42,7 +42,7 @@ class RestaurantRemoteDataRepository(private val remoteApi: RemoteApi) {
                     lat = params.lat,
                     lng = params.lng,
                     offset = params.offset,
-                    limit = params.offset
+                    limit = params.limit
                 ).execute()
 
                 if (response.isSuccessful && response.body() != null) {
